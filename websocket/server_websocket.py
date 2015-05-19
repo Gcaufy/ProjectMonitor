@@ -5,14 +5,21 @@ import messaging
 import handshake
 import file_handler
 import time
+import os
+
+FILE_PATH = '/opt/apache-tomcat-8.0.21/logs/catalina.out'
 
 def handle (client, addr):
 	#handle websocket connection
 	handshake.handshake(client)
 	lock = threading.Lock()
+	totalline = os.popen('cat ' + FILE_PATH + ' | wc -l').read()
+	i = totalline
 	while 1:
-		messaging.send_data(client, '123')
-		time.sleep(1)
+		text = os.popen('sed -n ' + str(totalline + i) + 'p ' + FILE_PATH).read()
+		if text != '':
+			i = i + 1
+			messaging.send_data(client, text)
 
 		# data = messaging.recv_data(client, 4096)
 		# if not data: break
