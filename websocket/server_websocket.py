@@ -13,10 +13,11 @@ def handle (client, addr):
 	#handle websocket connection
 	handshake.handshake(client)
 	lock = threading.Lock()
-	totalline = os.popen('cat ' + FILE_PATH + ' | wc -l').read()
-	i = totalline
+	totalline = os.popen('cat ' + FILE_PATH + ' | wc -l').read()[0:-1]
+	i = 0
 	while 1:
-		text = os.popen('sed -n ' + str(totalline + i) + 'p ' + FILE_PATH).read()
+		text = os.popen('sed -n ' + str(int(totalline) + i) + 'p ' + FILE_PATH).read()
+		#print 
 		if text != '':
 			i = i + 1
 			messaging.send_data(client, text)
