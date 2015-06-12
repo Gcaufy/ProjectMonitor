@@ -7,7 +7,7 @@ import file_handler
 import time
 import os
 
-FILE_PATH = '/opt/apache-tomcat-8.0.21/logs/catalina.out'
+FILE_PATH = '/opt/apache-tomcat-8.0.23/logs/catalina.out'
 
 def handle (client, addr):
 	#handle websocket connection
@@ -16,6 +16,7 @@ def handle (client, addr):
 	totalline = os.popen('cat ' + FILE_PATH + ' | wc -l').read()[0:-1]
 	i = 0
 	while 1:
+		#print('sed -n ' + str(int(totalline) + i) + 'p ' + FILE_PATH)
 		text = os.popen('sed -n ' + str(int(totalline) + i) + 'p ' + FILE_PATH).read()
 		#print 
 		if text != '':
