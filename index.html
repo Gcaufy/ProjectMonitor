@@ -3,11 +3,16 @@
 <head>
 	<title>WebSocket Client</title>
 	<style>
+		body {
+			height: 100%;
+		}
 		#output {
 			border: solid 1px #000;
 			padding: 10px 30px;
 			background-color: #000;
 			color: #999;
+			height: 100%;
+			margin-bottom: 100px;
 		}
 		#output p {
 			padding: 5px;
@@ -45,6 +50,8 @@
 				var p = document.createElement("p");
 				p.innerHTML = e.data;
 				output.appendChild(p);
+
+				document.body.scrollTop = document.body.scrollHeight;
 			};
 			
 			s.onerror = function (e) {
