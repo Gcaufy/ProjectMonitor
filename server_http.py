@@ -7,7 +7,7 @@ import signal
 from websocket.server_websocket import start_websocket_server
 
 def start_http_server():
-	PORT = 8000
+	PORT = 9001
 	handler = SimpleHTTPServer.SimpleHTTPRequestHandler
 	httpd = SocketServer.TCPServer(("", PORT), handler)
 	print "Serving HTTP at port", PORT

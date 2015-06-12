@@ -42,7 +42,7 @@ def start_websocket_server ():
 	print "Websocket server started"
 	s = socket.socket()
 	s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-	s.bind(('', 8081))
+	s.bind(('', 9002))
 	s.listen(5)
 	while 1:
 		conn, addr = s.accept()
