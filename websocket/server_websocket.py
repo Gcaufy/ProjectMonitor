@@ -7,7 +7,7 @@ import file_handler
 import time
 import os
 
-FILE_PATH = '/opt/apache-tomcat-8.0.23/logs/catalina.out'
+FILE_PATH = '/opt/tomcat/logs/catalina.out'
 
 def handle (client, addr):
 	#handle websocket connection
