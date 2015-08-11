@@ -1,67 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>WebSocket Client</title>
-	<style>
-		html, body {
-			height: 100%;
-		}
-		#output {
-			border: solid 1px #000;
-			padding: 10px 30px;
-			background-color: #000;
-			color: #999;
-			padding-bottom: 100px;
-		}
-		#output p {
-			padding: 5px;
-			margin: 0px;
-		}
-	</style>
+    <meta charset="utf-8">
+	<title>EPAM Projects Monitor</title>
+	<link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
-	
-	<div id="output">
+	<nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">EPAM SINO PROJECTS</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <!-- <li><a href="log-tomcat.html">Tomcat log</a></li>
+            <li><a href="log-nginx.html">Nginx log</a></li> -->
+          </ul>
+          <!-- <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form> -->
+        </div>
+      </div>
+    </nav>
+
+	<div class="container-fluid"  ng-app="" ng-controller="ctrl">
+		<div class="row">
+			<div class="col-md-12 main">
+		          <h1 class="page-header">Services</h1>
+
+		          <div class="row placeholders">
+		            <div class="col-xs-6 col-sm-3 placeholder" ng-repeat="(k, v) in services">
+		              <h4>{{k}} <small><a href="log-{{k.toLowerCase()}}.html" target="_blank" ng-show="v.viewLog">(view log)</a></small></h4>
+		              <span class="label label-{{v.run ? 'success' : 'warning'}}">{{v.run ? 'Running' : 'Down'}}</span>
+		            </div>
+		          </div>
+
+		          <h2 class="sub-header">Projects</h2>
+		          <div class="table-responsive">
+		            <table class="table table-striped">
+		              <thead>
+		                <tr>
+		                  <th>Repo</th>
+		                  <th>Branch</th>
+		                  <th>Last Deploy</th>
+		                  <th>Last Commit</th>
+		                </tr>
+		              </thead>
+		              <tbody>
+		                <tr ng-repeat="(k, v) in projects">
+		                  <td>{{k}}</td>
+		                  <td>{{v.branch}}</td>
+		                  <td>{{v.lastDeploy}}</td>
+		                  <td>{{v.lastCommit}}</td>
+		                </tr>
+		              </tbody>
+		            </table>
+		          </div>
+		    </div>
+		</div>
 	</div>
-	<script>
-	
-		var inputBox = document.getElementById("message");
-		var output = document.getElementById("output");
-		var form = document.getElementById("form");
 
-		try {
+<script>
+function ctrl($scope, $http, $timeout) {
+    function refresh () {
+    	$http.get("/info").success(function(data) {
+    		$scope.services = data.services;
+    		$scope.projects = data.projects;
+    		$timeout(refresh, 1000 * 60);
+    	});
+    }
+    refresh();
+}
 
-			var host = "ws://" + window.location.hostname + ":9002/websocket";
-			console.log("Host:", host);
-			
-			var s = new WebSocket(host, 'myprotocol');
-			
-			s.onopen = function (e) {
-				console.log("Socket opened.");
-			};
-			
-			s.onclose = function (e) {
-				console.log("Socket closed.");
-			};
-			
-			s.onmessage = function (e) {
-				console.log("Socket message:", e.data);
-				var p = document.createElement("p");
-				p.innerHTML = e.data;
-				output.appendChild(p);
+</script>
+<script src="http://apps.bdimg.com/libs/angular.js/1.2.15/angular.min.js"></script>
 
-				document.body.scrollTop = document.body.scrollHeight;
-			};
-			
-			s.onerror = function (e) {
-				console.log("Socket error:", e);
-			};
-			
-		} catch (ex) {
-			console.log("Socket exception:", ex);
-		}
 
-	</script>
 
 </body>
 </html>

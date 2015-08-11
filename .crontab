@@ -1,0 +1,3 @@
+* 8-21/1 * * * cd /data/sino-hkgta-fe/ && git pull >> /var/log/deploy/sino-hkgta-fe.log && echo `date` > /var/log/deploy/sino-hkgta-fe.version
+* 8-21/1 * * * cd /data/web-portal/ && git pull >> /var/log/deploy/web-portal.log && echo `date` > /var/log/deploy/web-portal.version
+* 8-21/1 * * * cd /data/sino-hkgta-be/sino-hkgta-be && git pull && ./deploy.sh >> /var/log/deploy/sino-hkgta-be.log && echo `date` > /var/log/deploy/sino-hkgta-be.version
