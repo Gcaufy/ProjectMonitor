@@ -1,6 +1,7 @@
 # 项目说明
 
 在此项目可以很方便的看到每个项目是何时部署, 以及部署的版本, 同时还可以看到服务运行的状态(以后可能会加入更多状态参数)
+![image](img/main.png)
 
 # 使用说明
 
@@ -24,4 +25,6 @@
 
 1. 按`WIN+R` 打开运行窗口, 并且输入`\\sino.dev`
 2. 在弹的窗口选择public文件夹, 右键->选择"Map network drive", 然后再在弹出窗口直接点Next 即可.
+![image](img/2.png)
 3. 此时打开"My Computer"即可发现映射好的Driver
+![image](img/3.png)
