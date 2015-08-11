@@ -2,29 +2,29 @@ import os
 
 PROJECTS = {
 	'sino-hkgta-fe': { 
-		path: '/data/sino-hkgta-fe/',
-		url: 'http://www.sino.dev'
+		'path': '/data/sino-hkgta-fe/',
+		'url': 'http://www.sino.dev'
 	},
 	'web-portal': { 
-		path: '/data/web-portal/',
-		url: 'http://member.sino.dev'
+		'path': '/data/web-portal/',
+		'url': 'http://member.sino.dev'
 	},
 	'sino-hkgta-be': { 
-		path: '/data/sino-hkgta-be/sino-hkgta-be/',
-		url: 'http://www.sino.dev:8080/sino-hkgta/'
+		'path': '/data/sino-hkgta-be/sino-hkgta-be/',
+		'url': 'http://www.sino.dev:8080/sino-hkgta/'
 	}
 }
 
 currentPath = os.getcwd()
 
 def getBranch (project):
-	os.chdir(PROJECTS[project.path])
+	os.chdir(PROJECTS[project['path']])
 	rst = os.popen('git rev-parse --abbrev-ref HEAD 2> /dev/null').read()[0:-1]
 	os.chdir(currentPath)
 	return rst
 
 def getLastCommit (project):
-	os.chdir(PROJECTS[project.path])
+	os.chdir(PROJECTS[project['path']])
 	rst = os.popen("git log --pretty=format:'%h -%d %s (%cr) <%an>' --abbrev-commit -1").read()
 	os.chdir(currentPath)
 	return rst
