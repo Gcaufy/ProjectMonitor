@@ -4,11 +4,31 @@ import SimpleHTTPServer
 import SocketServer
 import threading
 import signal
+import info.server_info as server_info
+import info.project_info as project_info
 from websocket.server_websocket import start_websocket_server
+
+class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler): 
+ 
+    def do_GET(self):
+    	print self.path
+    	if self.path == '/info':
+    		data = {}
+    		data['services'] = server_info.getServices()
+    		data['projects'] = project_info.getProjects()
+
+    		self.wfile.write(str(data))
+    	else:
+        	SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self) 
+ 
+    def do_POST(self): 
+        form = cgi.FieldStorage() 
+        SimpleHTTPServer.SimpleHTTPRequestHandler.do_POST(self) 
+
 
 def start_http_server():
 	PORT = 8000
-	handler = SimpleHTTPServer.SimpleHTTPRequestHandler
+	handler = ServerHandler
 	httpd = SocketServer.TCPServer(("", PORT), handler)
 	print "Serving HTTP at port", PORT
 	while keep_running():
