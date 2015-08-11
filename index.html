@@ -55,7 +55,7 @@
 		              </thead>
 		              <tbody>
 		                <tr ng-repeat="(k, v) in projects">
-		                  <td>{{k}}</td>
+		                  <td><a href="{{v.url}}" target="_blank">{{k}}</a></td>
 		                  <td>{{v.branch}}</td>
 		                  <td>{{v.lastDeploy}}</td>
 		                  <td>{{v.lastCommit}}</td>
