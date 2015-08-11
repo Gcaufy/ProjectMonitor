@@ -17,14 +17,14 @@ PROJECTS = {
 
 currentPath = os.getcwd()
 
-def getBranch (project):
-	os.chdir(PROJECTS[project['path']])
+def getBranch (path):
+	os.chdir(path)
 	rst = os.popen('git rev-parse --abbrev-ref HEAD 2> /dev/null').read()[0:-1]
 	os.chdir(currentPath)
 	return rst
 
-def getLastCommit (project):
-	os.chdir(PROJECTS[project['path']])
+def getLastCommit (path):
+	os.chdir(path)
 	rst = os.popen("git log --pretty=format:'%h -%d %s (%cr) <%an>' --abbrev-commit -1").read()
 	os.chdir(currentPath)
 	return rst
@@ -38,9 +38,9 @@ def getProjects ():
 	for (k, v) in PROJECTS.items():
 		data[k] = {
 			'url': v['url'],
-			'branch': getBranch(k),
+			'branch': getBranch(v['path']),
 			'lastDeploy': getLastDeploy(k),
-			'lastCommit': getLastCommit(k)
+			'lastCommit': getLastCommit(v['path'])
 		}
 	return data
 
